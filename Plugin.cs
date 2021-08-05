@@ -1,15 +1,12 @@
-﻿using Exiled.API.Features;
+using Exiled.API.Features;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MapHandler = Exiled.Events.Handlers.Map;
 
 namespace WarheadPanel_Hint
 {
     public class Plugin : Plugin<Config>
     {
-        public static Plugin Instance;
+        public static Plugin Singleton;
         public override string Author { get; } = "xNexus";
         public override string Name { get; } = "Warhead Hint";
         public override string Prefix { get; } = "WH";
@@ -20,20 +17,20 @@ namespace WarheadPanel_Hint
 
         public override void OnEnabled()
         {
-            Instance = this;
-            Log.Info("Plugin Cargado");
+            
+            
             _handler = new EventHandlers();
 
-            Exiled.Events.Handlers.Map.GeneratorActivated += _handler.GeneratorActivated;
+            MapHandler.GeneratorActivated += _handler.GeneratorActivated;
 
             base.OnEnabled();
         }
         public override void OnDisabled()
         {
-            Instance = null;
+            
             _handler = null;
 
-            Exiled.Events.Handlers.Map.GeneratorActivated -= _handler.GeneratorActivated;
+            MapHandler.GeneratorActivated -= _handler.GeneratorActivated;
 
             base.OnDisabled();
         }
